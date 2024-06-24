@@ -7,11 +7,11 @@ const { check } = require('express-validator')
 const { Router } = require('express');
 const { validarcampos } = require('../middlewares/validar-campos');
 const { validarJWT } = require('../middlewares/validar-jwt');
-const { getMedicos, crearMedico, actualizarMedico, borrarMedico } = require('../controllers/medicos');
+const { getMedicos, crearMedico, actualizarMedico, borrarMedico, getMedicoById } = require('../controllers/medicos');
 
 const router = Router();
 
-router.get('/', getMedicos);
+router.get('/', validarJWT, getMedicos);
 router.post('/',
     [
         validarJWT,
@@ -32,5 +32,7 @@ router.put('/:id',
 router.delete('/:id', validarJWT,
     borrarMedico);
 
+router.get('/:id', validarJWT,
+    getMedicoById);
 
 module.exports = router;
